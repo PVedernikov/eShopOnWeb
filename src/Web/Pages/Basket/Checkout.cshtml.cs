@@ -93,19 +93,19 @@ public class CheckoutModel : PageModel
             }
 
 
-            //// Call Azure Function
-            //var httpClient = _httpClientFactory.CreateClient();
-            //var order = new OrderModel
-            //{
-            //    OrderId = BasketModel.Id,
-            //    Address = new AddressModel { Street = "123 Main St.", City = "Kent", State = "OH", Country = "United States", ZipCode = "44240" },
-            //    Items = updateModel,
-            //    Total = orderEntity.Total()
-            //};
+            // Call Azure Function
+            var httpClient = _httpClientFactory.CreateClient();
+            var order = new OrderModel
+            {
+                OrderId = BasketModel.Id,
+                Address = new AddressModel { Street = "123 Main St.", City = "Kent", State = "OH", Country = "United States", ZipCode = "44240" },
+                Items = updateModel,
+                Total = orderEntity.Total()
+            };
 
-            //var orderJson = JsonSerializer.Serialize(order);
-            //var content = new StringContent(JsonSerializer.Serialize(order), Encoding.UTF8, "application/json");
-            //var result = await httpClient.PostAsync(_configuration["DeliveryOrderProcessorUrl"], content);
+            var orderJson = JsonSerializer.Serialize(order);
+            var content = new StringContent(JsonSerializer.Serialize(order), Encoding.UTF8, "application/json");
+            var result = await httpClient.PostAsync(_configuration["DeliveryOrderProcessorUrl"], content);
         }
         catch (EmptyBasketOnCheckoutException emptyBasketOnCheckoutException)
         {
